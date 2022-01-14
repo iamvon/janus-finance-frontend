@@ -13,6 +13,7 @@ function Token({totalToken, tagList}) {
           title: '#',
           dataIndex: 'key',
           key: 'key',
+          width: '10%',
           sorter: (a, b) => a.key - b.key,
           render: (text, record, index) => text + 1,
         },
@@ -20,21 +21,19 @@ function Token({totalToken, tagList}) {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
-          // width: '40%',
           sorter: (a, b) => a.name - b.name,
         },
         {
           title: 'Symbol',
           dataIndex: 'symbol',
           key: 'symbol',
-          // width: '40%',
+          width: '20%',
           sorter: (a, b) => a.symbol - b.symbol,
         },
         {
           title: 'Tags',
           dataIndex: 'tag',
           key: 'tag',
-          // width: '40%',
           render: (text, record) => {
             const tags = record.tag
             return (
