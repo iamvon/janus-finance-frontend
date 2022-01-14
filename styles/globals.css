@@ -1,4 +1,9 @@
-html,
+@import '~antd/dist/antd.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* html,
 body {
   padding: 0;
   margin: 0;
@@ -15,4 +20,4 @@ a {
 
 * {
   box-sizing: border-box;
-}
+} */
