@@ -66,7 +66,7 @@ function Wormhole({totalToken}) {
     })
     const newData = res.data.tokens.map((t, index) => {
       return {
-        key: index,
+        key: skip + index,
         ...t
       }
     })

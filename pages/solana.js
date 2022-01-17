@@ -31,6 +31,13 @@ function Token({totalToken, tagList}) {
           sorter: (a, b) => a.symbol - b.symbol,
         },
         {
+          title: 'Price',
+          dataIndex: 'price',
+          key: 'price',
+          width: '20%',
+          sorter: (a, b) => a.price - b.price,
+        },
+        {
           title: 'Tags',
           dataIndex: 'tag',
           key: 'tag',
@@ -99,6 +106,7 @@ function Token({totalToken, tagList}) {
       const newData = res.data.tokens.map((t, index) => {
         return {
           key: index,
+          price: 0,
           ...t
         }
       })
