@@ -9,10 +9,22 @@ import { useAutoConnect } from '../components/AutoConnectProvider';
 import { RequestAirdrop } from '../components/RequestAirdrop';
 import { SendTransaction } from '../components/SendTransaction';
 import { SignMessage } from '../components/SignMessage';
+import {scanTokenByPK} from '../utils/token'
+import {useEffect} from 'react'
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
 const Index: NextPage = () => {
-    const { autoConnect, setAutoConnect } = useAutoConnect();
-
+    const { connection } = useConnection();
+    const { publicKey } = useWallet();
+    
+    useEffect(() => {
+        if (publicKey) {
+            scanTokenByPK(connection, publicKey.toString()).then(result => {
+                console.log(result)
+            })
+        }
+    }, [publicKey])
+    
     return (
         <div>
             <div>

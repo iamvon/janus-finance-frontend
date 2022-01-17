@@ -31,6 +31,7 @@
         "@emotion/styled": "^11.6.0",
         "@material-ui/lab": "^4.0.0-alpha.60",
         "@mui/material": "^5.2.8",
+        "@solana/spl-token": "^0.1.8",
         "@solana/wallet-adapter-base": "^0.9.1",
         "@solana/wallet-adapter-react": "^0.15.2",
         "@solana/wallet-adapter-react-ui": "^0.9.1",
