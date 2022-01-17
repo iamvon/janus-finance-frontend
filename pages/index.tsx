@@ -14,8 +14,8 @@ import {useEthereumProvider} from '../components/EthereumContextProvider'
 const Index: NextPage = () => {
     const { autoConnect, setAutoConnect } = useAutoConnect();
     const {connect, disconnect, signerAddress} = useEthereumProvider();
-
-
+    
+    
 
     return (
         <div>

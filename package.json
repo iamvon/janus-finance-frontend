@@ -22,8 +22,8 @@
     "scripts": {
         "clean": "shx rm -rf .next out",
         "dev": "next dev",
-        "build": "yarn clean && next build && next export",
-        "start": "next start",
+        "build": "NEXT_PUBLIC_APP_CLUSTER=mainnet yarn clean && next build && next export",
+        "start": "NEXT_PUBLIC_APP_CLUSTER=mainnet next start",
         "lint": "next lint"
     },
     "dependencies": {
