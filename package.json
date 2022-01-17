@@ -22,14 +22,15 @@
     "scripts": {
         "clean": "shx rm -rf .next out",
         "dev": "next dev",
-        "build": "yarn clean && next build && next export",
-        "start": "next start",
+        "build": "NEXT_PUBLIC_APP_CLUSTER=mainnet yarn clean && next build && next export",
+        "start": "NEXT_PUBLIC_APP_CLUSTER=mainnet next start",
         "lint": "next lint"
     },
     "dependencies": {
         "@emotion/react": "^11.7.1",
         "@emotion/styled": "^11.6.0",
         "@material-ui/lab": "^4.0.0-alpha.60",
+        "@metamask/detect-provider": "^1.2.0",
         "@mui/material": "^5.2.8",
         "@solana/spl-token": "^0.1.8",
         "@solana/spl-token-registry": "^0.2.1550",
@@ -40,6 +41,7 @@
         "@solana/web3.js": "^1.20.0",
         "antd": "^4.18.3",
         "bs58": "^4.0.1",
+        "ethers": "^5.5.3",
         "mongoose": "^6.1.6",
         "next": "12.0.7",
         "notistack": "^2.0.3",

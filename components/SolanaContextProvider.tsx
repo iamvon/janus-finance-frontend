@@ -14,12 +14,13 @@ import { clusterApiUrl } from '@solana/web3.js';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import { FC, ReactNode, useCallback, useMemo } from 'react';
 import { AutoConnectProvider, useAutoConnect } from './AutoConnectProvider';
+import {WALLET_ADAPTER_NETWORK} from '../utils/const'
 
 const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const { autoConnect } = useAutoConnect();
 
     // Can be set to 'devnet', 'testnet', or 'mainnet-beta'
-    const network = WalletAdapterNetwork.Devnet;
+    const network = WALLET_ADAPTER_NETWORK;
 
     // You can also provide a custom RPC endpoint
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
@@ -58,7 +59,7 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     );
 };
 
-export const ContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const SolanaContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <SnackbarProvider>
             <AutoConnectProvider>

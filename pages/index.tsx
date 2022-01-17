@@ -12,11 +12,13 @@ import { SignMessage } from '../components/SignMessage';
 import {scanTokenByPK} from '../utils/token'
 import {useEffect} from 'react'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import {useEthereumProvider} from '../components/EthereumContextProvider'
 
 const Index: NextPage = () => {
+    const { autoConnect, setAutoConnect } = useAutoConnect();
+    const {connect, disconnect, signerAddress} = useEthereumProvider();
     const { connection } = useConnection();
     const { publicKey } = useWallet();
-    
     useEffect(() => {
         if (publicKey) {
             scanTokenByPK(connection, publicKey.toString()).then(result => {
@@ -27,6 +29,11 @@ const Index: NextPage = () => {
     
     return (
         <div>
+            <div>
+                <button onClick={connect}>connect</button>
+                <button onClick={disconnect}>disconnect</button>
+                <span>{signerAddress}</span>
+            </div>
             <div>
                 Connect Button
                 <ReactUIWalletConnectButton />
