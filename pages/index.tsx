@@ -9,12 +9,21 @@ import { useAutoConnect } from '../components/AutoConnectProvider';
 import { RequestAirdrop } from '../components/RequestAirdrop';
 import { SendTransaction } from '../components/SendTransaction';
 import { SignMessage } from '../components/SignMessage';
+import {useEthereumProvider} from '../components/EthereumContextProvider'
 
 const Index: NextPage = () => {
     const { autoConnect, setAutoConnect } = useAutoConnect();
+    const {connect, disconnect, signerAddress} = useEthereumProvider();
+
+
 
     return (
         <div>
+            <div>
+                <button onClick={connect}>connect</button>
+                <button onClick={disconnect}>connect</button>
+                <span>{signerAddress}</span>
+            </div>
             <div>
                 Connect Button
                 <ReactUIWalletConnectButton />

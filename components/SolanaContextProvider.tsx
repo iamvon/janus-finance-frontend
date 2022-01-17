@@ -58,7 +58,7 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     );
 };
 
-export const ContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const SolanaContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <SnackbarProvider>
             <AutoConnectProvider>

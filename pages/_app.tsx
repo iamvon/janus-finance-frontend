@@ -1,7 +1,8 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { FC } from 'react';
-import { ContextProvider } from '../components/ContextProvider';
+import { SolanaContextProvider } from '../components/SolanaContextProvider';
+import { EthereumProviderProvider } from "../components/EthereumContextProvider";
 
 // Use require instead of import since order matters
 require('@solana/wallet-adapter-react-ui/styles.css');
@@ -13,9 +14,11 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
             <Head>
                 <title>@solana/wallet-adapter Example</title>
             </Head>
-            <ContextProvider>
-                <Component {...pageProps} />
-            </ContextProvider>
+            <SolanaContextProvider>
+                <EthereumProviderProvider>
+                    <Component {...pageProps} />
+                </EthereumProviderProvider>
+            </SolanaContextProvider>
         </>
     );
 };
