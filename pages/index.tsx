@@ -13,12 +13,15 @@ import {scanTokenByPK} from '../utils/token'
 import {useEffect} from 'react'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import {useEthereumProvider} from '../components/EthereumContextProvider'
+import {useLPTokenMap} from '../hook/usePLTokenMap'
 
 const Index: NextPage = () => {
     const { autoConnect, setAutoConnect } = useAutoConnect();
     const {connect, disconnect, signerAddress} = useEthereumProvider();
     const { connection } = useConnection();
     const { publicKey } = useWallet();
+    const data = useLPTokenMap()
+    console.log(data)
     useEffect(() => {
         if (publicKey) {
             scanTokenByPK(connection, publicKey.toString()).then(result => {

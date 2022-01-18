@@ -47,3 +47,5 @@ export const SOLANA_CHAIN_ID = CLUSTER === "mainnet"
     : CLUSTER === "testnet"
     ? ENV.Testnet
     : ENV.Devnet;
+
+export const SonarWatchEnpoint = "https://api.sonar.watch"
