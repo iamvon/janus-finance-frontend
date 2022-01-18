@@ -4,13 +4,8 @@ const Schema = mongoose.Schema;
 
 const TokenSchema = new Schema(
     {
-        chainId: {
+        cid: {
             type: String,
-            default: ""
-        },
-        address: {
-            type: String,
-            unique: true,
             index: true,
             default: ""
         },
@@ -24,11 +19,9 @@ const TokenSchema = new Schema(
             index: true,
             default: ""
         },
-        decimals: {
-            type: Number
-        },
-        logoURI: {
+        slug: {
             type: String,
+            index: true,
             default: ""
         },
         tag: {
@@ -36,14 +29,13 @@ const TokenSchema = new Schema(
             index: true,
             default: []
         },
-        extensions: {
-            type: Object,
-            default: {}
+        price: {
+            type: Number,
+            default: 0
         }
     },
     { timestamps: true }
 )
-
 const Token = mongoose.models.Token || mongoose.model("Token", TokenSchema);
 
 module.exports = Token;

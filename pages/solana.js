@@ -4,6 +4,9 @@ import { Table, Tag, Input, Select  } from 'antd';
 import TokenModel from '../server/models/token.model'
 import TagModel from '../server/models/tag.model'
 import axios from 'axios'
+import { PythConnection } from '../pyth/PythConnection.ts'
+import { getPythProgramKeyForCluster } from '../pyth/cluster.ts'
+import { Cluster, clusterApiUrl, Connection, PublicKey } from '@solana/web3.js'
 
 const { Option } = Select;
 
@@ -66,9 +69,52 @@ function Token({totalToken, tagList}) {
     const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: totalToken })
     const [currentTag, setCurrentTag] = useState("")
     const [logInfo, setLogInfo] = useState("")
+    const [priceObj, setPriceObj] = useState({})
+
+    useEffect(() => {
+      // const newData = tableData.map(d => {
+      //   if(priceObj[d.symbol] !== undefined) return {
+      //     ...d,
+      //     price: priceObj[d.symbol]
+      //   }
+      //   return d
+      // })
+      setTableData(tableData => tableData.map(d => {
+        if(priceObj[d.symbol] !== undefined) return {
+          ...d,
+          price: priceObj[d.symbol]
+        }
+        return d
+      }))
+    }, [priceObj])
 
     useEffect(() => {
       handleFetchToken(pagination, {}, "", "")
+      const SOLANA_CLUSTER_NAME = 'devnet'
+        const connection = new Connection(clusterApiUrl(SOLANA_CLUSTER_NAME))
+        const pythPublicKey = getPythProgramKeyForCluster(SOLANA_CLUSTER_NAME)
+        const pythConnection = new PythConnection(connection, pythPublicKey)
+        let newPrice = {}
+        pythConnection.onPriceChange((product, price) => {
+        // sample output:
+        // SRM/USD: $8.68725 ±$0.0131
+            if (price.price && price.confidence) {
+                // tslint:disable-next-line:no-console
+                // console.log(`${product.symbol}: $${price.price} \xB1$${price.confidence}`)
+                // setData(`${product.symbol}: $${price.price} \xB1$${price.confidence}`)
+                // console.log(JSON.stringify(product))
+                newPrice[product.base] = price.price
+                // console.log(Object.keys(newPrice).length)
+                setPriceObj({...newPrice})
+            } else {
+                // tslint:disable-next-line:no-console
+                // console.log(`${product.symbol}: price currently unavailable`)
+            }
+        })
+
+        // tslint:disable-next-line:no-console
+        console.log('Reading from Pyth price feed...')
+        pythConnection.start()
     }, [])
     
     const onChangeTag = (value) => {
@@ -105,8 +151,7 @@ function Token({totalToken, tagList}) {
       console.log(res.data.tokens)
       const newData = res.data.tokens.map((t, index) => {
         return {
-          key: index,
-          price: 0,
+          key: skip + index,
           ...t
         }
       })
@@ -123,7 +168,7 @@ function Token({totalToken, tagList}) {
               <div onClick={handleSearchToken} className='px-3 flex items-center bg-green-500 hover:bg-green-700 cursor-pointer text-white'>Search</div>
             </div>
             <span>{logInfo}</span>
-            <div>
+            <div className='w-80 flex flex-row items-center'>
               <span className='px-2'>Filter tag</span>
               <Select
                 showSearch
@@ -136,7 +181,7 @@ function Token({totalToken, tagList}) {
               >
                 {tagList.map((t, index) => {
                   return <Option key={index} value={t.name}>{t.name}</Option>
-                })}
+                }).concat([<Option key={tagList.length} value="">All</Option>])}
               </Select>
             </div>
           </div>

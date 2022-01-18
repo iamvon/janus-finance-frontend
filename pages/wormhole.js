@@ -23,6 +23,13 @@ function Wormhole({totalToken}) {
       sorter: (a, b) => a.symbol - b.symbol,
     },
     {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
+      width: '20%',
+      sorter: (a, b) => a.price - b.price,
+    },
+    {
       title: 'Markets',
       dataIndex: 'market',
       key: 'market',
